@@ -1,0 +1,140 @@
+﻿@model Kindergarten.ViewModels.Models.ChildrenViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Children</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-action="Index" asp-route-page="@Model.PageViewModel.PageIndex">
+    <div class="form-action no-color">
+        <label>Child name: </label>
+        <input name="FullName" value="@Model.ChildrenFilterViewModel.FullName" />
+
+        <label>Group: </label>
+        <input name="Group" value="@Model.ChildrenFilterViewModel.Group" />
+
+        <label>Group Type: </label>
+        <input name="GroupType" value="@Model.ChildrenFilterViewModel.GroupType" />
+        <br/>
+        <label>Age: </label>
+        <input name="Age" type="number" min="1" value="@Model.ChildrenFilterViewModel.Age" />
+
+        <label>Other groups: </label>
+        <input name="OtherGroups" value="@Model.ChildrenFilterViewModel.OtherGroups" />
+        
+
+        <input type="submit" value="Filter" class="btn btn-success" />
+        <!--<a asp-action="Index">Back to Full List</a>-->
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChFullName" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.FullName)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChDate" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.BirthDate)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChGender" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.Gender)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChAdress" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.Adress)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChNote" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.Note)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChOther" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.OtherGroup)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChGroup" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.Group)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortState="@Model.SortViewModel.ChParent" asp-route-page="@Model.PageViewModel.PageIndex">
+                    @Html.DisplayNameFor(model => model.Child.Parent)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Childs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OtherGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.GroupName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parent.Mfullname)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.PageViewModel.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.PageViewModel.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortState="@Model.SortViewModel.CurrentState"
+   asp-route-page="@(Model.PageViewModel.PageIndex - 1)"
+   asp-route-name="@Model.ChildrenFilterViewModel.FullName"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+
+<a asp-action="Index"
+   asp-route-sortState="@Model.SortViewModel.CurrentState"
+   asp-route-page="@(Model.PageViewModel.PageIndex+1)"
+   asp-route-name="@Model.ChildrenFilterViewModel.FullName"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
