@@ -204,7 +204,7 @@ namespace Kindergarten.Controllers
                 return NotFound();
             }
             ViewData["StaffId"] = new SelectList(_context.Staff, "Id", "FullName", @group.StaffId);
-            ViewData["TypeId"] = new SelectList(_context.GroupTypes, "Id", "NameOFType", @group.TypeId);
+            ViewData["TypeId"] = new SelectList(_context.GroupTypes, "Id", "NameOfType", @group.TypeId);
             return View(@group);
         }
 
